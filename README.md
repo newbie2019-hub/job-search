@@ -53,14 +53,23 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
      - toEqual -> JavaScript Objects or Arrays
 
 2. [Vue Test Utils](https://test-utils.vuejs.org/) - Allows us to setup our components within our testing files simulating a component as if it exists.
+
    - [Getting Started](https://test-utils.vuejs.org/guide/) with test utils of vue.
    - accepts two parameters (component, options)
      - component refers to the vue component being tested
      - options is an object similar to the vue lifecycle that can be override
        - { data() { return { data: 'Sample Data' } } }
    - **Asynchronous Operations** is also available
-     - it('', async() => { await wrapper.setData({ company: "Hello World" })})
-       - setData({}) should be asynchronous
+     - it('', async() => { await wrapper.setData({ company: "Hello World" })}) - setData({}) should be asynchronous
+
+   ### Methods
+
+   - **find()** and **findAll()** methods locate elements in our Vue component's template. We can target HTML elements, CSS classes,IDs, etc. But these approaches can be brittle.
+   - **text()** - finds text from the mounted component
+   - **findComponent({ name: 'ComponentName' })** - finds a component within in a component (Check for MainNav test file)
+     - findComponent is not really recommended as the test will be limited to the name of the component and if changed it will fail the test. Recommended is to use the find() passind a data-test attribute inside so that even if the component name is changed it will still pass the test
+   - **trigger()** - can trigger or simulate a user event such as a click in a user test.
+     - is asynchronous thus needed to be in a asynchronous method
 
 ## Unit Tests
 
@@ -99,7 +108,20 @@ We want our tests to mirror the user's interaction with the component. As such, 
 
 ## Vue Notes
 
+### Vue Re-rendering
+
+Vue automatically re-renders a component template whenever a piece of data is changed or updated.
+
+### Methods
+
+Where we can add into our vue component configuration object. This can access the data and overwrite its properties.
+
 ### Vue Directives
 
 - v-bind allows us to bind the attributes and a colon (:) is a shorthand for v-bind
 - key attribute is a unique identifier for vue to keep track of the elements
+- v-if directive conditionally renders a chunk of HTML or a Vue component
+- v-else directive renders a chunk of HTML if the v-if directive evaluates to false
+- v-on directive declares a method for Vue to invoke whenever an event occurs.
+  - @ is a shortcut for v-on directive.
+  - dont invoke the v-on method unless we pass in some parameters as vue does invoke it automatically and will pass an event object.

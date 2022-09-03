@@ -42,4 +42,43 @@ describe("MainNav", () => {
       "Jobs",
     ]);
   });
+
+  describe("when user is logged out", () => {
+    it("prompts user to sign-in", () => {
+      const wrapper = mount(MainNav);
+
+      /**
+       *  findComponent is not really recommended
+       *  as it limits or decouples us to the
+       *  name of the component thus if a change
+       *  on the name happends it will fail the
+       *  test.
+       */
+      // const loginButton = wrapper.findComponent({ name: "ActionButton" });
+      // const profileImage = wrapper.findComponent({ name: "ProfileImage" });
+
+      /**
+       *  Re-written the above code changing the
+       *  findComponent() method into find() method
+       */
+
+      const loginButton = wrapper.find("[data-test='login-button']");
+      expect(loginButton.exists()).toBe(true);
+    });
+  });
+
+  describe("when user is logged in", () => {
+    it("profile image component is shown", async () => {
+      const wrapper = mount(MainNav);
+
+      let profileImage = wrapper.find("[data-test='profile-image']");
+      expect(profileImage.exists()).toBe(false);
+
+      const loginButton = wrapper.find("[data-test='login-button']");
+      await loginButton.trigger("click");
+
+      profileImage = wrapper.find("[data-test='profile-image']");
+      expect(profileImage.exists()).toBe(true);
+    });
+  });
 });
