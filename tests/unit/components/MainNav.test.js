@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import MainNav from "@/components/MainNav.vue";
 
 describe("MainNav", () => {
@@ -21,12 +21,12 @@ describe("MainNav", () => {
      *  recommended when writing tests.
      *
      */
-    const wrapper = mount(MainNav);
+    const wrapper = shallowMount(MainNav);
     expect(wrapper.text()).toMatch("Google Careers");
   });
 
   it("displays menu items for navigation", () => {
-    const wrapper = mount(MainNav);
+    const wrapper = shallowMount(MainNav);
     /**
      *  find(), findAll() allows us to search for elements,
      *  id, classes or anything
@@ -45,7 +45,7 @@ describe("MainNav", () => {
 
   describe("when user is logged out", () => {
     it("prompts user to sign-in", () => {
-      const wrapper = mount(MainNav);
+      const wrapper = shallowMount(MainNav);
 
       /**
        *  findComponent is not really recommended
@@ -69,7 +69,7 @@ describe("MainNav", () => {
 
   describe("when user is logged in", () => {
     it("profile image component is shown", async () => {
-      const wrapper = mount(MainNav);
+      const wrapper = shallowMount(MainNav);
 
       let profileImage = wrapper.find("[data-test='profile-image']");
       expect(profileImage.exists()).toBe(false);

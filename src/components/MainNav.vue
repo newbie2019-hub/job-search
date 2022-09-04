@@ -2,7 +2,9 @@
   <header
     class="sticky flex justify-center w-full h-16 px-4 py-6 text-sm bg-white border-b-2"
   >
-    <div class="flex items-center justify-between w-full lg:max-w-7xl gap-x-4">
+    <div
+      class="relative flex items-center justify-between w-full lg:max-w-7xl gap-x-4"
+    >
       <nav class="flex items-center w-full">
         <a :href="url" class="mr-8 text-lg font-medium whitespace-nowrap">{{
           company
@@ -16,18 +18,24 @@
       <ActionButton
         v-if="!isLoggedIn"
         data-test="login-button"
+        text="Sign-in"
         @click="loginUser"
       />
       <ProfileImage v-else data-test="profile-image" />
     </div>
   </header>
+  <div class="relative">
+    <Subnav v-if="isLoggedIn" />
+  </div>
 </template>
 <script>
 import ActionButton from "@/components/ActionButton.vue";
 import ProfileImage from "@/components/ProfileImage.vue";
+import Subnav from "@/components/Subnav.vue";
+
 export default {
   name: "MainNav",
-  components: { ActionButton, ProfileImage },
+  components: { ActionButton, ProfileImage, Subnav },
   data() {
     return {
       company: "Google Careers",

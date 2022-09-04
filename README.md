@@ -51,16 +51,33 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - Use the **expect** function to declare your assertion (e.g., toBe, toBeGreaterThan)
      - toBe -> strict equality (Booleans, Strings, Numbers)
      - toEqual -> JavaScript Objects or Arrays
+     - toMatch() -> checks that it matches the regular expression
 
 2. [Vue Test Utils](https://test-utils.vuejs.org/) - Allows us to setup our components within our testing files simulating a component as if it exists.
 
    - [Getting Started](https://test-utils.vuejs.org/guide/) with test utils of vue.
-   - accepts two parameters (component, options)
+   - accepts two parameters **mount(component, options)**
      - component refers to the vue component being tested
      - options is an object similar to the vue lifecycle that can be override
-       - { data() { return { data: 'Sample Data' } } }
+
+   ```
+   //Options
+       {
+         global: {
+           stub: {}
+         },
+         data() {
+           return {
+             data: 'Sample Data'
+           }
+         }
+       }
+   ```
+
    - **Asynchronous Operations** is also available
      - it('', async() => { await wrapper.setData({ company: "Hello World" })}) - setData({}) should be asynchronous
+   - shallowMount(component, options) -> doesnt mount any components the component has
+   - **stub** -> global: { stub: { componentName: true } } will replace/swap any component in a component with a substitute
 
    ### Methods
 
@@ -70,6 +87,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
      - findComponent is not really recommended as the test will be limited to the name of the component and if changed it will fail the test. Recommended is to use the find() passind a data-test attribute inside so that even if the component name is changed it will still pass the test
    - **trigger()** - can trigger or simulate a user event such as a click in a user test.
      - is asynchronous thus needed to be in a asynchronous method
+   - **classes()** -> checks for classes on the element
+   - **get()** -> will not proceed to the assertions or next line if get fails
 
 ## Unit Tests
 
@@ -112,6 +131,10 @@ We want our tests to mirror the user's interaction with the component. As such, 
 
 Vue automatically re-renders a component template whenever a piece of data is changed or updated.
 
+### Computed Property
+
+Automatically updates its value when a certain value changes. A computed property will only re-evaluate when some of its reactive dependencies have changed.
+
 ### Methods
 
 Where we can add into our vue component configuration object. This can access the data and overwrite its properties.
@@ -125,3 +148,14 @@ Where we can add into our vue component configuration object. This can access th
 - v-on directive declares a method for Vue to invoke whenever an event occurs.
   - @ is a shortcut for v-on directive.
   - dont invoke the v-on method unless we pass in some parameters as vue does invoke it automatically and will pass an event object.
+
+### Components
+
+components are independent and isolated small chunks with predefined properties that is reusable.
+
+- props -> used to pass in values to the component and has three properties for each props { required: Boolean, type: String, default: Value, validator() { return Boolean } }
+
+## FontAwesome for Vue
+
+[FontAwesome Installation](https://fontawesome.com/docs/web/use-with/vue)
+[FontAwesome Adding Icons](https://fontawesome.com/docs/web/use-with/vue/add-icons)

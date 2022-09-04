@@ -56,3 +56,20 @@ const squares = numbers.map((num) => {
 });
 
 console.log(squares);
+
+/**
+ *  Dynamic Object Properties
+ *  ES6 Syntax
+ *
+ *  Ojbects are key value pair
+ *  and keys can be dynamic by
+ *  using the square bracket
+ */
+
+const favoriteFood = "sushi";
+
+const goodFoods = {
+  [favoriteFood]: true,
+};
+
+console.log(goodFoods);
