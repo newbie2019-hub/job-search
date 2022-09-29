@@ -76,8 +76,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
    - **Asynchronous Operations** is also available
      - it('', async() => { await wrapper.setData({ company: "Hello World" })}) - setData({}) should be asynchronous
-   - shallowMount(component, options) -> doesnt mount any components the component has
-   - **stub** -> global: { stub: { componentName: true } } will replace/swap any component in a component with a substitute
+   - **shallowMount(component, options)** - doesnt mount any components the component has
+   - **stub** - global: { stub: { componentName: true } } will replace/swap any component in a component with a substitute to simplify the test.
 
    ### Methods
 
@@ -87,8 +87,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
      - findComponent is not really recommended as the test will be limited to the name of the component and if changed it will fail the test. Recommended is to use the find() passind a data-test attribute inside so that even if the component name is changed it will still pass the test
    - **trigger()** - can trigger or simulate a user event such as a click in a user test.
      - is asynchronous thus needed to be in a asynchronous method
-   - **classes()** -> checks for classes on the element
-   - **get()** -> will not proceed to the assertions or next line if get fails
+   - **classes()** - checks for classes on the element
+   - **get()** -> will not proceed to the assertions or next line if it fails. This will fail the test if Vue Test Utils cannot identify the search target.
+   - **exists()** - returns true if a Vue Test Utils wrapper/node/target is an actual element
+   -
 
 ## Unit Tests
 
@@ -142,6 +144,7 @@ Where we can add into our vue component configuration object. This can access th
 ### Vue Directives
 
 - v-bind allows us to bind the attributes and a colon (:) is a shorthand for v-bind
+  - allows to pass in dynamic prop value (not a string because props are evaluated as string)
 - key attribute is a unique identifier for vue to keep track of the elements
 - v-if directive conditionally renders a chunk of HTML or a Vue component
 - v-else directive renders a chunk of HTML if the v-if directive evaluates to false
@@ -155,7 +158,29 @@ components are independent and isolated small chunks with predefined properties 
 
 - props -> used to pass in values to the component and has three properties for each props { required: Boolean, type: String, default: Value, validator() { return Boolean } }
 
+```
+props: {
+  btnType: {
+    type: String,
+    default: 'primary',
+    required: false,
+    validator(val) {
+      return ['primary'].includes(val)
+    }
+  }
+}
+```
+
+Global Components - can be used in any Vue component. We do not need to import them and register them locally.
+
+- they can increase your bundle size
+
 ## FontAwesome for Vue
 
 [FontAwesome Installation](https://fontawesome.com/docs/web/use-with/vue)
 [FontAwesome Adding Icons](https://fontawesome.com/docs/web/use-with/vue/add-icons)
+
+## CSS GRID GUIDE NOTES
+
+[CSS Tricks](https://css-tricks.com/snippets/css/complete-guide-grid/)
+[GRID GARDEN](https://cssgridgarden.com) - game for practicing css grid

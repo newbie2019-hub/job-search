@@ -2,7 +2,7 @@
   <div class="w-full h-16 bg-white border-b-2">
     <div
       v-if="onJobResultsPage"
-      class="flex items-center w-full h-full px-8 mx-auto lg:max-w-7xl"
+      class="flex items-center w-full h-full px-4 mx-auto lg:max-w-7xl"
       data-test="job-count"
     >
       <font-awesome-icon :icon="['fas', 'search']" class="mr-4" />
